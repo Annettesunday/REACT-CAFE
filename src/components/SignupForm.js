@@ -14,6 +14,7 @@ class SignupForm extends React.Component {
     }
   }
   renderInput = ({ input, label, type, meta }) => {
+    console.log(meta.submitting);
     const className = `field ${meta.error && meta.touched ? "error" : ""}`;
     return (
       <div className={className}>
@@ -24,10 +25,8 @@ class SignupForm extends React.Component {
     );
   };
 
-  onSubmit = formValues => {
-    console.log("I am getting here", formValues);
-    this.props.signUp(formValues);
-  };
+  onSubmit = formValues => this.props.signUp(formValues);
+
   render() {
     return (
       <form
@@ -53,7 +52,13 @@ class SignupForm extends React.Component {
           type="password"
           component={this.renderInput}
         />
-        <button className="ui button primary">Submit</button>
+        <button
+          className="ui center button primary"
+          type="submit"
+          disabled={this.props.submitting}
+        >
+          {this.props.submitting ? "Submitting" : "Submit"}
+        </button>
       </form>
     );
   }

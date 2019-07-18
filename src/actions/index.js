@@ -10,7 +10,7 @@ export const signUp = user => async dispatch => {
       payload: response.data
     });
   } catch (error) {
-    console.log(error.response);
+    console.log(error.response.data);
   }
 };
 export const signIn = user => async dispatch => {
@@ -21,7 +21,7 @@ export const signIn = user => async dispatch => {
       payload: response.data
     });
   } catch (error) {
-    console.log(error.response);
+    console.log(error.response.data);
   }
   console.log("finished");
 };
