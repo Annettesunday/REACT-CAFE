@@ -14,12 +14,11 @@ class LoginForm extends React.Component {
     }
   }
   renderInput = ({ input, label, meta, type }) => {
-    // console.log(type);
     const className = `field ${meta.error && meta.touched ? "error" : ""}`;
     return (
       <div className={className}>
         <label>{label}</label>
-        <input {...input} autoComplete="off" />
+        <input {...input} type={type} autoComplete="off" />
         {this.renderError(meta)}
       </div>
     );
@@ -54,21 +53,22 @@ class LoginForm extends React.Component {
 }
 
 const validate = formValues => {
+  const email = formValues.email;
+  const password = formValues.password;
   const errors = {};
 
-  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formValues.email)) {
+  if (!email) {
+    errors.email = "Field must not be empty";
+  } else if (
+    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formValues.email)
+  ) {
     errors.email = "Invalid email address";
   }
 
-  if (formValues.password < 6) {
+  if (!password) {
+    errors.password = "Field must not be empty";
+  } else if (password < 6) {
     errors.password = "Password must be more than 6 characters";
-  }
-
-  if (!formValues.email) {
-    errors.email = "You must enter an email address";
-  }
-  if (!formValues.password) {
-    errors.password = "You must enter a password";
   }
 
   return errors;

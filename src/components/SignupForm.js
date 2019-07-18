@@ -25,7 +25,7 @@ class SignupForm extends React.Component {
   };
 
   onSubmit = formValues => {
-    console.log("I am getting here", formValues)
+    console.log("I am getting here", formValues);
     this.props.signUp(formValues);
   };
   render() {
@@ -60,26 +60,36 @@ class SignupForm extends React.Component {
 }
 
 const validate = formValues => {
+  const email = formValues.email;
+  const userName = formValues.userName;
+  const password = formValues.password;
+  const confirmPassword = formValues.confirmPassword;
+
   const errors = {};
 
-  if (!formValues.email) {
-    errors.email = "Please an enter an email";
-  }
-  if (
-    formValues.email &&
-    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formValues.email)
+  if (!email) {
+    errors.email = "Field must not be empty";
+  } else if (
+    email &&
+    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)
   ) {
     errors.email = "Invalid email address";
   }
 
-  if (!formValues.username) {
-    errors.username = "Please enter a username";
+  if (!userName) {
+    errors.userName = "Field must not be empty";
+  } else if (userName && userName.length < 6) {
+    errors.userName = "Username must not be less than 6 characters";
   }
-  if (!formValues.password) {
-    errors.password = "Please enter a password";
+  if (!password) {
+    errors.password = "Field must not be empty";
+  } else if (password && password.length < 6) {
+    errors.password = "Password must not be less than 6 characters";
   }
-  if (!formValues.confirmPassword) {
-    errors.confirmPassword = "Please confirm your password";
+  if (!confirmPassword) {
+    errors.confirmPassword = "Field must not be empty";
+  } else if (confirmPassword && confirmPassword !== formValues.password) {
+    errors.confirmPassword = "Password must match";
   }
   return errors;
 };
