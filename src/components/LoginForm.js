@@ -47,6 +47,7 @@ class LoginForm extends React.Component {
         <button className="ui button primary" disabled={this.props.submitting}>
           {this.props.submitting ? "Submitting" : "Submit"}
         </button>
+        <div className="ui error message">{this.props.initialValues.general}</div>
       </form>
     );
   }
