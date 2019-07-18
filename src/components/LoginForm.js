@@ -1,7 +1,9 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
+import { connect } from "react-redux";
+import { signIn } from "../actions";
 
-class Auth extends React.Component {
+class LoginForm extends React.Component {
   renderError({ error, touched }) {
     if (touched && error) {
       return (
@@ -11,7 +13,8 @@ class Auth extends React.Component {
       );
     }
   }
-  renderInput = ({ input, label, meta }) => {
+  renderInput = ({ input, label, meta, type }) => {
+    // console.log(type);
     const className = `field ${meta.error && meta.touched ? "error" : ""}`;
     return (
       <div className={className}>
@@ -22,9 +25,9 @@ class Auth extends React.Component {
     );
   };
 
-  onSubmit(formValues) {
-    console.log(formValues);
-  }
+  onSubmit = formValues => {
+    this.props.signIn(formValues);
+  };
 
   render() {
     return (
@@ -32,11 +35,17 @@ class Auth extends React.Component {
         onSubmit={this.props.handleSubmit(this.onSubmit)}
         className="ui form error"
       >
-        <Field name="email" component={this.renderInput} label="Enter Email" />
+        <Field
+          name="email"
+          component={this.renderInput}
+          label="Enter Email"
+          type="text"
+        />
         <Field
           name="password"
           component={this.renderInput}
           label="Enter Password"
+          type="password"
         />
         <button className="ui button primary">Submit</button>
       </form>
@@ -65,7 +74,12 @@ const validate = formValues => {
   return errors;
 };
 
-export default reduxForm({
+const renderedForm = reduxForm({
   form: "AuthForm",
   validate
-})(Auth);
+})(LoginForm);
+
+export default connect(
+  null,
+  { signIn }
+)(renderedForm);
