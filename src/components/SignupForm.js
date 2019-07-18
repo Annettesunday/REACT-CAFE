@@ -14,7 +14,6 @@ class SignupForm extends React.Component {
     }
   }
   renderInput = ({ input, label, type, meta }) => {
-    console.log(meta.submitting);
     const className = `field ${meta.error && meta.touched ? "error" : ""}`;
     return (
       <div className={className}>
@@ -101,10 +100,17 @@ const validate = formValues => {
 
 const renderedForm = reduxForm({
   form: "SignupForm",
-  validate
+  validate,
+  enableReinitialize: true
 })(SignupForm);
 
+const mapStateToProps = state => {
+  return {
+    initialValues: state.errors
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   { signUp }
 )(renderedForm);
