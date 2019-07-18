@@ -2,6 +2,7 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import { signUp } from "../actions";
+import renderApiErrors from "../utils/renderApiErrors";
 
 class SignupForm extends React.Component {
   renderError({ error, touched }) {
@@ -27,6 +28,7 @@ class SignupForm extends React.Component {
   onSubmit = formValues => this.props.signUp(formValues);
 
   render() {
+    const error = this.props.initialValues.newError;
     return (
       <form
         onSubmit={this.props.handleSubmit(this.onSubmit)}
@@ -58,6 +60,7 @@ class SignupForm extends React.Component {
         >
           {this.props.submitting ? "Submitting" : "Submit"}
         </button>
+        {renderApiErrors(error)}
       </form>
     );
   }
