@@ -1,5 +1,7 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
+import { connect } from "react-redux";
+import { signUp } from "../actions";
 
 class SignupForm extends React.Component {
   renderError({ error, touched }) {
@@ -12,7 +14,7 @@ class SignupForm extends React.Component {
     }
   }
   renderInput = ({ input, label, type, meta }) => {
-    const className = `field ${meta.error && meta.touched ? 'error' : '' }`
+    const className = `field ${meta.error && meta.touched ? "error" : ""}`;
     return (
       <div className={className}>
         <label>{label}</label>
@@ -23,7 +25,8 @@ class SignupForm extends React.Component {
   };
 
   onSubmit = formValues => {
-    console.log(formValues);
+    console.log("I am getting here", formValues)
+    this.props.signUp(formValues);
   };
   render() {
     return (
@@ -33,7 +36,7 @@ class SignupForm extends React.Component {
       >
         <Field name="email" label="Enter Email" component={this.renderInput} />
         <Field
-          name="username"
+          name="userName"
           label="Enter Username"
           type="text"
           component={this.renderInput}
@@ -62,7 +65,10 @@ const validate = formValues => {
   if (!formValues.email) {
     errors.email = "Please an enter an email";
   }
-  if (formValues.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formValues.email)) {
+  if (
+    formValues.email &&
+    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formValues.email)
+  ) {
     errors.email = "Invalid email address";
   }
 
@@ -78,7 +84,12 @@ const validate = formValues => {
   return errors;
 };
 
-export default reduxForm({
+const renderedForm = reduxForm({
   form: "SignupForm",
   validate
 })(SignupForm);
+
+export default connect(
+  null,
+  { signUp }
+)(renderedForm);
