@@ -74,12 +74,18 @@ const validate = formValues => {
   return errors;
 };
 
+const mapStateToProps = state => {
+  return {
+    initialValues: state.errors
+  };
+};
 const renderedForm = reduxForm({
   form: "LoginForm",
-  validate
+  validate,
+  enableReinitialize: true
 })(LoginForm);
 
 export default connect(
-  null,
+  mapStateToProps,
   { signIn }
 )(renderedForm);
