@@ -24,9 +24,7 @@ class LoginForm extends React.Component {
     );
   };
 
-  onSubmit = formValues => {
-    this.props.signIn(formValues);
-  };
+  onSubmit = formValues => this.props.signIn(formValues);
 
   render() {
     return (
@@ -46,7 +44,9 @@ class LoginForm extends React.Component {
           label="Enter Password"
           type="password"
         />
-        <button className="ui button primary">Submit</button>
+        <button className="ui button primary" disabled={this.props.submitting}>
+          {this.props.submitting ? "Submitting" : "Submit"}
+        </button>
       </form>
     );
   }
