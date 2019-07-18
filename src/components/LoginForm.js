@@ -75,7 +75,7 @@ const validate = formValues => {
 };
 
 const renderedForm = reduxForm({
-  form: "AuthForm",
+  form: "LoginForm",
   validate
 })(LoginForm);
 
