@@ -1,7 +1,5 @@
-import axios from "axios";
-
 import Menu from "../apis/Menu";
-import { SIGN_IN, SIGN_UP, SET_ERRORS } from "./actionTypes";
+import { SIGN_IN, SIGN_UP, SET_ERRORS, SET_USER } from "./actionTypes";
 import history from "../history";
 
 export const setAuthorizationToken = token => {
@@ -12,7 +10,7 @@ export const setAuthorizationToken = token => {
   localStorage.setItem("jwtToken", FBIToken);
 
   // set token to auth header
-  axios.defaults.headers.common["Authorization"] = FBIToken;
+  Menu.defaults.headers.common["Authorization"] = FBIToken;
 };
 export const setErrors = errors => ({ type: SET_ERRORS, payload: errors });
 export const signUp = user => async dispatch => {
@@ -24,6 +22,7 @@ export const signUp = user => async dispatch => {
       payload: response.data
     });
     setAuthorizationToken(response.data.token);
+    dispatch(getUser());
     history.push("/");
   } catch (error) {
     console.log(error.response.data);
@@ -39,10 +38,25 @@ export const signIn = user => async dispatch => {
       payload: response.data
     });
     setAuthorizationToken(response.data.token);
+    dispatch(getUser());
+
     history.push("/");
   } catch (error) {
     console.log(error.response.data);
     dispatch(setErrors(error.response.data));
   }
   console.log("finished");
+};
+
+export const getUser = () => async dispatch => {
+  try {
+    const response = await Menu.get("/user");
+    dispatch({
+      type: SET_USER,
+      payload: response.data
+    });
+    console.log(response.data);
+  } catch (error) {
+    dispatch(setErrors(error.response.data));
+  }
 };
