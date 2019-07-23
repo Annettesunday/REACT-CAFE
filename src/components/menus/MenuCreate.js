@@ -1,7 +1,9 @@
 import React from "react";
 
-const MenuCreate = () => {
-  return <div>MenuCreate</div>;
-};
+class MenuCreate extends React.Component {
+  render() {
+    return <div>MenuCreate</div>;
+  }
+}
 
 export default MenuCreate;
