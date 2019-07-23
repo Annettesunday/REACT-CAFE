@@ -1,4 +1,4 @@
-import { SET_USER } from "../actions/actionTypes";
+import { SET_USER, SET_UNAUTHENTICATED } from "../actions/actionTypes";
 
 const INITIAL_STATE = {
   authenticated: false,
@@ -14,6 +14,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
         authenticated: true,
         ...action.payload
       };
+    case SET_UNAUTHENTICATED:
+      return INITIAL_STATE;
     default:
       return state;
   }
