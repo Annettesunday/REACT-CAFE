@@ -1,7 +1,20 @@
 import React from "react";
+import { connect } from "react-redux";
+import { getUser } from "../../actions";
 
-const MenuList = () => {
-  return <div>MenuList</div>;
+class MenuList extends React.Component {
+  render() {
+    return <div>{this.props.user.credentials.userName}</div>;
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
 };
 
-export default MenuList;
+export default connect(
+  mapStateToProps,
+  { getUser }
+)(MenuList);
