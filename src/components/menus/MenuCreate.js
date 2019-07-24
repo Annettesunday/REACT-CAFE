@@ -4,13 +4,21 @@ import { Field, reduxForm } from "redux-form";
 const options = ["Side", "Main Course"];
 
 class MenuCreate extends React.Component {
-  renderInput = ({ input, type, value }) => {
-    console.log(input);
+  renderInput = ({ input, type, value, meta, onChange }) => {
+    const className = `field ${meta.error && meta.touched ? "error" : ""}`;
 
     return (
-      <React.Fragment>
-        <input {...input} type={type} value={value} />
-      </React.Fragment>
+      <div className={className}>
+        <input
+          {...input}
+          type={type}
+          value={value}
+          autoComplete="off"
+          onChange={e => {
+            this.handleChange(e.target.files[0]);
+          }}
+        />
+      </div>
     );
   };
 
@@ -18,10 +26,17 @@ class MenuCreate extends React.Component {
     console.log("I am submitting with these", formValues);
   };
 
+  handleChange = image => {
+    console.log("I am being called with an event", image);
+
+    const formData = new FormData();
+    formData.append("image", image, image.name);
+  };
+
   render() {
     return (
       <form
-        className="ui form"
+        className="ui form "
         onSubmit={this.props.handleSubmit(this.onSubmit)}
       >
         <div>
@@ -56,8 +71,8 @@ class MenuCreate extends React.Component {
             <Field
               name="price"
               component="input"
-              type="number"
               autoComplete="off"
+              type="number"
             />
           </div>
         </div>
