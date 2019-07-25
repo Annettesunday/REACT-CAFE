@@ -1,11 +1,19 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
+import { connect } from "react-redux";
+import { createImageUrl } from "../../actions";
 
 const options = ["Side", "Main Course"];
 
 class MenuCreate extends React.Component {
   renderInput = ({ input, type, value, meta, onChange }) => {
     const className = `field ${meta.error && meta.touched ? "error" : ""}`;
+    const onInputChange =
+      input === "file"
+        ? (onChange = e => {
+            this.handleChange(e.target.files[0]);
+          })
+        : null;
 
     return (
       <div className={className}>
@@ -14,9 +22,7 @@ class MenuCreate extends React.Component {
           type={type}
           value={value}
           autoComplete="off"
-          onChange={e => {
-            this.handleChange(e.target.files[0]);
-          }}
+          onChange={onInputChange}
         />
       </div>
     );
@@ -31,6 +37,7 @@ class MenuCreate extends React.Component {
 
     const formData = new FormData();
     formData.append("image", image, image.name);
+    this.props.createImageUrl(formData);
   };
 
   render() {
@@ -59,7 +66,7 @@ class MenuCreate extends React.Component {
           <div>
             <Field
               name="name"
-              component="input"
+              component={this.renderInput}
               type="text"
               autoComplete="off"
             />
@@ -70,7 +77,7 @@ class MenuCreate extends React.Component {
           <div>
             <Field
               name="price"
-              component="input"
+              component={this.renderInput}
               autoComplete="off"
               type="number"
             />
@@ -102,6 +109,17 @@ class MenuCreate extends React.Component {
   }
 }
 
-export default reduxForm({
+const renderedForm = reduxForm({
   form: "MenuCreate"
 })(MenuCreate);
+
+const mapStateToProps = state => {
+  return {
+    imageUrl: state.imageUrl
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { createImageUrl }
+)(renderedForm);
