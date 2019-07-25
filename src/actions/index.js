@@ -4,7 +4,8 @@ import {
   SIGN_UP,
   SET_ERRORS,
   SET_USER,
-  SET_UNAUTHENTICATED
+  SET_UNAUTHENTICATED,
+  CREATE_IMAGE_URL_SUCCESSFUL
 } from "./actionTypes";
 import history from "../history";
 
@@ -69,6 +70,7 @@ export const getUser = () => async dispatch => {
     });
     console.log("This is from the user method", response.data);
   } catch (error) {
+    console.log('The error is', error.response.data)
     dispatch(setErrors(error.response.data));
   }
 };
@@ -78,4 +80,17 @@ export const logout = () => dispatch => {
   dispatch({
     type: SET_UNAUTHENTICATED
   });
+};
+
+export const createImageUrl = image => async dispatch => {
+  try {
+    const response = await Menu.post("/menu/image", image);
+    dispatch({
+      type: CREATE_IMAGE_URL_SUCCESSFUL,
+      payload: response.data
+    });
+    console.log(response.data);
+  } catch (error) {
+    console.log(error.response.data);
+  }
 };
