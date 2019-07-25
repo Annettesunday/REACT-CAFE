@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { logout } from "../actions";
-import store from "../reducers";
 import { connect } from "react-redux";
 
 class Header extends React.Component {
