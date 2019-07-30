@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import MenuCard from "./MenuCard";
 import { fetchMenus } from "../../actions";
+import { relative } from "path";
 
 class MenuList extends React.Component {
   componentDidMount() {
@@ -23,8 +24,11 @@ class MenuList extends React.Component {
       );
     return (
       <>
-        <div>{this.props.user.credentials.userName}</div>
-        <Link to="/menus/new" className="ui center button primary">
+        <Link
+          to="/menus/new"
+          className="ui left button primary"
+          style={{ position: "relative", left: "88%", bottom: "8px" }}
+        >
           CREATE MENU
         </Link>
         <div className="ui stackable four column grid">{renderedMenus}</div>
