@@ -7,7 +7,8 @@ import {
   SET_UNAUTHENTICATED,
   CREATE_IMAGE_URL_SUCCESSFUL,
   CREATE_MENU_SUCCESSFULLY,
-  FETCH_MENUS
+  FETCH_MENUS,
+  DELETE_MENU
 } from "./actionTypes";
 import history from "../history";
 
@@ -118,7 +119,20 @@ export const fetchMenus = () => async dispatch => {
       type: FETCH_MENUS,
       payload: response.data
     });
-    console.log('The menu response is >>>>>>>', response.data)
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteMenu = id => async dispatch => {
+  try {
+    console.log(id);
+    const response = await Menu.delete(`/menu/${id}`);
+    dispatch({
+      type: DELETE_MENU,
+      payload: id
+    });
+    console.log(response, "You wanna delete me");
   } catch (error) {
     console.log(error);
   }
