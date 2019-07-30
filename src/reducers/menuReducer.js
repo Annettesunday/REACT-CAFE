@@ -7,7 +7,7 @@ const INITIAL_STATE = {
 const menuReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CREATE_MENU_SUCCESSFULLY:
-      return { menus: [action.payload, ...state.menus] };
+      return { ...state, menus: [action.payload, state.menus] };
     case FETCH_MENUS:
       return action.payload;
     default:

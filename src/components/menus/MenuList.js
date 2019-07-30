@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import MenuCard from "./MenuCard";
 import { fetchMenus } from "../../actions";
-import { relative } from "path";
 
 class MenuList extends React.Component {
   componentDidMount() {
