@@ -13,8 +13,8 @@ class MenuList extends React.Component {
       this.props.menus.length > 0 ? (
         this.props.menus.map((menu, index) => {
           return (
-            <div className="column">
-              <MenuCard key={index} menu={menu} />
+            <div className="column" key={menu.menuId}>
+              <MenuCard menu={menu} />
             </div>
           );
         })
