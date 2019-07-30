@@ -5,7 +5,8 @@ import {
   SET_ERRORS,
   SET_USER,
   SET_UNAUTHENTICATED,
-  CREATE_IMAGE_URL_SUCCESSFUL
+  CREATE_IMAGE_URL_SUCCESSFUL,
+  CREATE_MENU_SUCCESSFULLY
 } from "./actionTypes";
 import history from "../history";
 
@@ -69,7 +70,7 @@ export const getUser = () => async dispatch => {
       payload: response.data
     });
   } catch (error) {
-    console.log('The error is', error.response.data)
+    console.log("The error is", error.response.data);
     dispatch(setErrors(error.response.data));
   }
 };
@@ -86,10 +87,24 @@ export const createImageUrl = image => async dispatch => {
     const response = await Menu.post("/menu/image", image);
     dispatch({
       type: CREATE_IMAGE_URL_SUCCESSFUL,
-      payload: response.data
+      payload: response.data.menuImageUrl
     });
-    console.log(response.data);
+    console.log(response.data.menuImageUrl);
   } catch (error) {
     console.log(error.response.data);
+  }
+};
+
+export const createMenu = values => async dispatch => {
+  try {
+    const response = await Menu.post("/menu", values);
+    console.log("I am the response", response.data);
+    dispatch({
+      type: CREATE_MENU_SUCCESSFULLY,
+      payload: response.data
+    });
+    history.push("/");
+  } catch (error) {
+    console.log("This is the error", error.response);
   }
 };
