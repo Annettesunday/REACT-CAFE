@@ -1,7 +1,7 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import { createImageUrl } from "../../actions";
+import { createImageUrl, createMenu } from "../../actions";
 
 const options = ["Side", "Main Course"];
 
@@ -39,12 +39,16 @@ class MenuCreate extends React.Component {
     );
   };
 
-  renderSelectField = props => {
-    console.log(props);
-    return <select />;
+  onSubmit = formValues => {
+    const { name, type, price } = formValues;
+    const newMenu = {
+      name,
+      type,
+      price,
+      menuImage: this.props.imageUrl
+    };
+    this.props.createMenu(newMenu);
   };
-
-  onSubmit = formValues => {};
 
   handleChange = image => {
     const formData = new FormData();
@@ -53,7 +57,6 @@ class MenuCreate extends React.Component {
   };
 
   render() {
-    console.log(this.props.submitting);
     return (
       <form
         className="ui form error"
@@ -101,7 +104,7 @@ class MenuCreate extends React.Component {
             <label>Photo</label>
             <div>
               <Field
-                name="picture"
+                name="menuImage"
                 component={this.renderInput}
                 type="file"
                 value={null}
@@ -156,11 +159,12 @@ const renderedForm = reduxForm({
 const mapStateToProps = state => {
   return {
     imageUrl: state.imageUrl,
+    menu: state.menus,
     initialValues: !!state.errors ? state.errors.newError : null
   };
 };
 
 export default connect(
   mapStateToProps,
-  { createImageUrl }
+  { createImageUrl, createMenu }
 )(renderedForm);
