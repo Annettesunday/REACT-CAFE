@@ -4,11 +4,13 @@ import authReducer from "./authReducer";
 import errorReducer from "./errorReducer";
 import userReducer from "./userReducer";
 import imageReducer from "./imageReducer";
+import menuReducer from "./menuReducer";
 
 export default combineReducers({
   form: formReducer,
   auth: authReducer,
   errors: errorReducer,
   user: userReducer,
-  imageUrl: imageReducer
+  imageUrl: imageReducer,
+  menus: menuReducer
 });
