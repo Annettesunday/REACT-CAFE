@@ -6,7 +6,8 @@ import {
   SET_USER,
   SET_UNAUTHENTICATED,
   CREATE_IMAGE_URL_SUCCESSFUL,
-  CREATE_MENU_SUCCESSFULLY
+  CREATE_MENU_SUCCESSFULLY,
+  FETCH_MENUS
 } from "./actionTypes";
 import history from "../history";
 
@@ -70,7 +71,7 @@ export const getUser = () => async dispatch => {
       payload: response.data
     });
   } catch (error) {
-    console.log("The error is", error.response.data);
+    console.log("The error is", error);
     dispatch(setErrors(error.response.data));
   }
 };
@@ -107,5 +108,18 @@ export const createMenu = values => async dispatch => {
   } catch (error) {
     console.log("This is the error", error);
     console.log("This is the error", error.response);
+  }
+};
+
+export const fetchMenus = () => async dispatch => {
+  try {
+    const response = await Menu.get("/menus");
+    dispatch({
+      type: FETCH_MENUS,
+      payload: response.data
+    });
+    console.log('The menu response is >>>>>>>', response.data)
+  } catch (error) {
+    console.log(error);
   }
 };
