@@ -105,6 +105,7 @@ export const createMenu = values => async dispatch => {
     });
     history.push("/");
   } catch (error) {
+    console.log("This is the error", error);
     console.log("This is the error", error.response);
   }
 };
