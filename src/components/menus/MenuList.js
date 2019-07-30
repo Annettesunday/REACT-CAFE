@@ -12,7 +12,11 @@ class MenuList extends React.Component {
     const renderedMenus =
       this.props.menus.length > 0 ? (
         this.props.menus.map((menu, index) => {
-          return <MenuCard key={index} menu={menu} />;
+          return (
+            <div className="column">
+              <MenuCard key={index} menu={menu} />
+            </div>
+          );
         })
       ) : (
         <div>Loading</div>
@@ -23,7 +27,7 @@ class MenuList extends React.Component {
         <Link to="/menus/new" className="ui center button primary">
           CREATE MENU
         </Link>
-        {renderedMenus}
+        <div className="ui stackable four column grid">{renderedMenus}</div>
       </>
     );
   }
