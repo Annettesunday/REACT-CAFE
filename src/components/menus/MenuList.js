@@ -1,16 +1,29 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-// import { getUser } from "../../actions";
+import MenuCard from "./MenuCard";
+import { fetchMenus } from "../../actions";
 
 class MenuList extends React.Component {
+  componentDidMount() {
+    this.props.fetchMenus();
+  }
   render() {
+    const renderedMenus =
+      this.props.menus.length > 0 ? (
+        this.props.menus.map((menu, index) => {
+          return <MenuCard key={index} menu={menu} />;
+        })
+      ) : (
+        <div>Loading</div>
+      );
     return (
       <>
         <div>{this.props.user.credentials.userName}</div>
         <Link to="/menus/new" className="ui center button primary">
           CREATE MENU
         </Link>
+        {renderedMenus}
       </>
     );
   }
@@ -18,11 +31,12 @@ class MenuList extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    menus: state.menus
   };
 };
 
 export default connect(
   mapStateToProps,
-  // { getUser }
+  { fetchMenus }
 )(MenuList);
