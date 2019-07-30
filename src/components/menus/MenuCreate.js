@@ -28,7 +28,7 @@ class MenuCreate extends React.Component {
           onChange={e => this.handleChange(e.target.files[0])}
         />
       ) : (
-        <input {...input} autoComplete="off" />
+        <input {...input} autoComplete="off" type={type} />
       );
 
     return (
