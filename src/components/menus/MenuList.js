@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { getUser } from "../../actions";
+// import { getUser } from "../../actions";
 
 class MenuList extends React.Component {
   render() {
@@ -24,5 +24,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getUser }
+  // { getUser }
 )(MenuList);

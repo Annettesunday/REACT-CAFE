@@ -68,7 +68,6 @@ export const getUser = () => async dispatch => {
       type: SET_USER,
       payload: response.data
     });
-    console.log("This is from the user method", response.data);
   } catch (error) {
     console.log('The error is', error.response.data)
     dispatch(setErrors(error.response.data));

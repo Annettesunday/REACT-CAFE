@@ -16,16 +16,11 @@ import { getUser } from "../actions";
 
 const token = localStorage.jwtToken;
 if (!!token) {
-  console.log(!!token, "dsfcesr");
   const decodedToken = jwtDecode(token);
   if (decodedToken.exp * 1000 < Date.now()) {
-    console.log("I am logged out, and I need to log back in");
     window.location.href = "/login";
   } else {
-    console.log("I am being called");
-    // store.dispatch(getUser());
     Menu.defaults.headers.common["Authorization"] = token;
-    console.log("The store object is >>>>>>>>>>>>>>>>>>>>", store);
     store.dispatch(getUser());
   }
 }

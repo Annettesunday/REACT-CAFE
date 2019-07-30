@@ -6,44 +6,57 @@ import { createImageUrl } from "../../actions";
 const options = ["Side", "Main Course"];
 
 class MenuCreate extends React.Component {
-  renderInput = ({ input, type, value, meta, onChange }) => {
+  renderError = ({ error, touched }) => {
+    if (error && touched) {
+      return (
+        <div className="ui error message">
+          <div className="error">{error}</div>
+        </div>
+      );
+    }
+  };
+  renderInput = ({ input, type, value, meta }) => {
     const className = `field ${meta.error && meta.touched ? "error" : ""}`;
-    const onInputChange =
-      input === "file"
-        ? (onChange = e => {
-            this.handleChange(e.target.files[0]);
-          })
-        : null;
 
-    return (
-      <div className={className}>
+    const markup =
+      type === "file" ? (
         <input
           {...input}
           type={type}
           value={value}
           autoComplete="off"
-          onChange={onInputChange}
+          onChange={e => this.handleChange(e.target.files[0])}
         />
+      ) : (
+        <input {...input} autoComplete="off" />
+      );
+
+    return (
+      <div className={className}>
+        {markup}
+        {this.renderError(meta)}
       </div>
     );
   };
 
-  onSubmit = formValues => {
-    console.log("I am submitting with these", formValues);
+  renderSelectField = props => {
+    console.log(props);
+    return <select />;
   };
 
-  handleChange = image => {
-    console.log("I am being called with an event", image);
+  onSubmit = formValues => {};
 
+  handleChange = image => {
     const formData = new FormData();
     formData.append("image", image, image.name);
     this.props.createImageUrl(formData);
   };
 
   render() {
+    console.log(this.props.submitting);
     return (
       <form
-        className="ui form "
+        className="ui form error"
         onSubmit={this.props.handleSubmit(this.onSubmit)}
       >
         <div>
@@ -97,7 +110,7 @@ class MenuCreate extends React.Component {
           </div>
           <button
             style={{ marginTop: "20px" }}
-            className="ui center button primary"
+            className="ui button primary"
             type="submit"
             disabled={this.props.submitting}
           >
@@ -109,13 +122,41 @@ class MenuCreate extends React.Component {
   }
 }
 
+const validate = formValues => {
+  const name = formValues.name;
+  const price = formValues.price;
+  const type = formValues.type;
+  const picture = formValues.picture;
+
+  const errors = {};
+
+  if (!name) {
+    errors.name = "Field must not be empty";
+  }
+  if (!price) {
+    errors.price = "Field must not be empty";
+  }
+  if (!type) {
+    errors.type = "You some select a type";
+  }
+
+  if (picture && picture.length === 0) {
+    errors.picture = "Field must not be empty";
+  }
+
+  return errors;
+};
+
 const renderedForm = reduxForm({
-  form: "MenuCreate"
+  form: "MenuCreate",
+  validate,
+  enableReinitialize: true
 })(MenuCreate);
 
 const mapStateToProps = state => {
   return {
-    imageUrl: state.imageUrl
+    imageUrl: state.imageUrl,
+    initialValues: !!state.errors ? state.errors.newError : null
   };
 };
 
