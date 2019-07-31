@@ -8,7 +8,9 @@ import {
   CREATE_IMAGE_URL_SUCCESSFUL,
   CREATE_MENU_SUCCESSFULLY,
   FETCH_MENUS,
-  DELETE_MENU
+  DELETE_MENU,
+  EDIT_MENU,
+  FETCH_MENU
 } from "./actionTypes";
 import history from "../history";
 
@@ -133,6 +135,33 @@ export const deleteMenu = id => async dispatch => {
       payload: id
     });
     console.log(response, "You wanna delete me");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const editMenu = (id, values) => async dispatch => {
+  try {
+    const response = await Menu.patch(`/menu/${id}/edit`, values);
+    dispatch({
+      type: EDIT_MENU,
+      payload: response.data
+    });
+    console.log(response);
+    history.push("/");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchMenu = id => async dispatch => {
+  try {
+    const response = await Menu.get(`/menu/${id}`);
+    dispatch({
+      type: FETCH_MENU,
+      payload: response.data
+    });
+    // console.log(response.data)
   } catch (error) {
     console.log(error);
   }
