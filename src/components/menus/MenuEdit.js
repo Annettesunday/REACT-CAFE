@@ -7,17 +7,12 @@ import MenuForm from "./MenuForm";
 class MenuEdit extends React.Component {
   componentDidMount() {
     this.props.fetchMenu(this.props.match.params.id);
-    // console.log("I have been selected", this.props.match.params.id);
   }
 
   onSubmit = formValues => {
-    console.log("I have been selected", this.props.match.params.id);
-    console.log(" am getting hereI")
-
     this.props.editMenu(this.props.match.params.id, formValues);
   };
   render() {
-    console.log("from state", this.props.menu.menuImage);
     return (
       <>
         <h3>Edit A Menu</h3>
