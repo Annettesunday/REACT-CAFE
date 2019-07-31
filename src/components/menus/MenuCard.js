@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { deleteMenu } from "../../actions";
 
@@ -31,7 +32,12 @@ const MenuCard = ({ menu, deleteMenu }) => {
         >
           Delete Menu
         </button>
-        <button className="negative ui button">Edit Menu</button>
+        <Link
+          className="negative ui button"
+          to={`/menus/edit/${menu.menuId}`}
+        >
+          Edit Menu
+        </Link>
       </div>
     </>
   );
