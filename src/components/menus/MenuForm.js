@@ -99,13 +99,15 @@ class MenuCreate extends React.Component {
                 value={null}
               />
             </div>
-            <div>
-              <img
-                src={this.props.menu.menuImage}
-                alt="menuImage"
-                style={{ maxWidth: "10%" }}
-              />
-            </div>
+            {this.props.menu.menuImage ? (
+              <div>
+                <img
+                  src={this.props.menu.menuImage}
+                  alt="menuImage"
+                  style={{ maxWidth: "10%" }}
+                />
+              </div>
+            ) : null}
           </div>
           <button
             style={{ marginTop: "20px" }}
