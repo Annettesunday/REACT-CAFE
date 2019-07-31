@@ -1,7 +1,9 @@
 import {
   CREATE_MENU_SUCCESSFULLY,
   FETCH_MENUS,
-  DELETE_MENU
+  DELETE_MENU,
+  EDIT_MENU,
+  FETCH_MENU
 } from "../actions/actionTypes";
 
 const INITIAL_STATE = {
@@ -16,6 +18,10 @@ const menuReducer = (state = INITIAL_STATE, action) => {
       return action.payload;
     case DELETE_MENU:
       return state.filter(menu => menu.menuId !== action.payload);
+      case EDIT_MENU:
+        return {...state, menus: [action.payload]}
+      case FETCH_MENU:
+        return action.payload
     default:
       return state;
   }
