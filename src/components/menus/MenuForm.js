@@ -5,7 +5,7 @@ import { createImageUrl, createMenu } from "../../actions";
 
 const options = ["Side", "Main Course"];
 
-class MenuCreate extends React.Component {
+class MenuForm extends React.Component {
   renderError = ({ error, touched }) => {
     if (error && touched) {
       return (
@@ -149,10 +149,10 @@ const validate = formValues => {
 };
 
 const renderedForm = reduxForm({
-  form: "MenuCreate",
+  form: "MenuForm",
   validate,
   enableReinitialize: true
-})(MenuCreate);
+})(MenuForm);
 
 const mapStateToProps = state => {
   return {
