@@ -134,6 +134,7 @@ export const deleteMenu = id => async dispatch => {
       type: DELETE_MENU,
       payload: id
     });
+    history.push("/");
     console.log(response, "You wanna delete me");
   } catch (error) {
     console.log(error);

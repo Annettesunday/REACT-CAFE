@@ -1,12 +1,22 @@
 import React from "react";
 import Modal from "../Modal";
+import { connect } from "react-redux";
 import history from "../../history";
+import { deleteMenu } from "../../actions";
 
-const MenuDelete = () => {
+const MenuDelete = props => {
+  console.log(props.menu);
   const actions = (
     <>
-      <button className="ui negative button">Delete</button>
-      <button className="ui positive button">Cancel</button>
+      <button
+        onClick={() => props.deleteMenu(props.match.params.id)}
+        className="ui negative button"
+      >
+        Delete
+      </button>
+      <button onClick={() => history.push("/")} className="ui positive button">
+        Cancel
+      </button>
     </>
   );
   return (
@@ -19,4 +29,13 @@ const MenuDelete = () => {
   );
 };
 
-export default MenuDelete;
+const mapStateToProps = state => {
+  return {
+    menu: state.menus
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { deleteMenu }
+)(MenuDelete);
