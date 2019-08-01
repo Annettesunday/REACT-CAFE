@@ -1,7 +1,8 @@
 import React from "react";
+import Modal from "../Modal";
 
 const MenuDelete = () => {
-  return <div>MenuDelete</div>;
+  return <Modal />;
 };
 
 export default MenuDelete;

@@ -26,16 +26,13 @@ const MenuCard = ({ menu, deleteMenu }) => {
         </div>
       </div>
       <div>
-        <button
+        <Link
+          to={`/menus/delete/${menu.menuId}`}
           className="positive ui button"
-          onClick={() => deleteMenu(menu.menuId)}
         >
           Delete Menu
-        </button>
-        <Link
-          className="negative ui button"
-          to={`/menus/edit/${menu.menuId}`}
-        >
+        </Link>
+        <Link className="negative ui button" to={`/menus/edit/${menu.menuId}`}>
           Edit Menu
         </Link>
       </div>
