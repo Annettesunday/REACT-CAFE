@@ -1,4 +1,5 @@
 import React from "react";
+import { toast } from "react-toastify";
 import Modal from "../Modal";
 import { connect } from "react-redux";
 import history from "../../history";
@@ -9,7 +10,17 @@ const MenuDelete = props => {
   const actions = (
     <>
       <button
-        onClick={() => props.deleteMenu(props.match.params.id)}
+        onClick={() =>
+          props
+            .deleteMenu(props.match.params.id)
+            .then(() => {
+              console.log("I am getting to this toast");
+              toast.success("Menu deleted successfully!");
+            })
+            .catch(error => {
+              toast.error("Error deleting message", error.message);
+            })
+        }
         className="ui negative button"
       >
         Delete

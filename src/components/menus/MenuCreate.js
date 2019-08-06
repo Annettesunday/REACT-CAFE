@@ -1,4 +1,5 @@
 import React from "react";
+import { reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import { createImageUrl, createMenu } from "../../actions";
 import MenuForm from "./MenuForm";
@@ -15,7 +16,6 @@ class MenuCreate extends React.Component {
     this.props.createMenu(newMenu);
   };
 
-
   render() {
     return (
       <div>
@@ -25,6 +25,10 @@ class MenuCreate extends React.Component {
     );
   }
 }
+
+const renderedForm = reduxForm({
+  form: "MenuCreate"
+})(MenuCreate);
 
 const mapStateToProps = state => {
   return {
@@ -37,4 +41,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   { createImageUrl, createMenu }
-)(MenuCreate);
+)(renderedForm);

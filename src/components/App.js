@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Router, Switch } from "react-router-dom";
 import jwtDecode from "jwt-decode";
+import { ToastContainer } from "react-toastify";
 import Menu from "../apis/Menu";
 import MenuList from "./menus/MenuList";
 import MenuDelete from "./menus/MenuDelete";
@@ -13,6 +14,7 @@ import SignupForm from "./SignupForm";
 import history from "../history";
 import store from "../store";
 import { getUser } from "../actions";
+import 'react-toastify/dist/ReactToastify.css';
 
 const token = localStorage.jwtToken;
 if (!!token) {
@@ -26,20 +28,23 @@ if (!!token) {
 }
 const App = () => {
   return (
-    <div className="ui container">
-      <Router history={history}>
-        <Header />
-        <Switch>
-          <Route path="/" exact component={MenuList} />
-          <Route path="/login" component={LoginForm} />
-          <Route path="/signup" component={SignupForm} />
-          <Route path="/menus/new" component={MenuCreate} />
-          <Route path="/menus/delete/:id/" component={MenuDelete} />
-          <Route path="/menus/edit/:id" component={MenuEdit} />
-          <Route path="/menus/:id" component={MenuShow} />
-        </Switch>
-      </Router>
-    </div>
+    <>
+      <ToastContainer />
+      <div className="ui container">
+        <Router history={history}>
+          <Header />
+          <Switch>
+            <Route path="/" exact component={MenuList} />
+            <Route path="/login" component={LoginForm} />
+            <Route path="/signup" component={SignupForm} />
+            <Route path="/menus/new" component={MenuCreate} />
+            <Route path="/menus/delete/:id/" component={MenuDelete} />
+            <Route path="/menus/edit/:id" component={MenuEdit} />
+            <Route path="/menus/:id" component={MenuShow} />
+          </Switch>
+        </Router>
+      </div>
+    </>
   );
 };
 

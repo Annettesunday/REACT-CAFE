@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
+import { toast } from "react-toastify";
 import { editMenu, fetchMenu } from "../../actions";
 import MenuForm from "./MenuForm";
 
@@ -10,7 +11,14 @@ class MenuEdit extends React.Component {
   }
 
   onSubmit = formValues => {
-    this.props.editMenu(this.props.match.params.id, formValues);
+    this.props
+      .editMenu(this.props.match.params.id, formValues)
+      .then(() => {
+        toast.success("Menu edited successfully");
+      })
+      .catch(error => {
+        toast.error("Error editing menu", error.message);
+      });
   };
   render() {
     return (
