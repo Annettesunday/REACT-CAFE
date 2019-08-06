@@ -3,24 +3,31 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import MenuCard from "./MenuCard";
 import { fetchMenus } from "../../actions";
+import Spinner from "../Spinner";
 
 class MenuList extends React.Component {
   componentDidMount() {
     this.props.fetchMenus();
   }
   render() {
-    const renderedMenus =
-      this.props.menus.length > 0 ? (
-        this.props.menus.map((menu, index) => {
+    console.log("I am the menus", this.props.menus.length);
+
+    const renderedMenus = () => {
+      if (this.props.menus.length === 0) {
+        return <div>No menus to display</div>;
+      } else if (this.props.menus.length > 0) {
+        return this.props.menus.map((menu, index) => {
           return (
             <div className="column" key={menu.menuId}>
               <MenuCard menu={menu} />
             </div>
           );
-        })
-      ) : (
-        <div>Loading</div>
-      );
+        });
+      } else {
+        return <Spinner message="Please wait for menus to load" />;
+      }
+    };
+
     return (
       <>
         <Link
@@ -30,7 +37,7 @@ class MenuList extends React.Component {
         >
           CREATE MENU
         </Link>
-        <div className="ui stackable four column grid">{renderedMenus}</div>
+        <div className="ui stackable four column grid">{renderedMenus()}</div>
       </>
     );
   }
@@ -39,7 +46,8 @@ class MenuList extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    menus: state.menus
+    menus: state.menus,
+    loading: state.loading
   };
 };
 

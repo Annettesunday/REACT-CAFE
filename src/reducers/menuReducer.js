@@ -18,10 +18,10 @@ const menuReducer = (state = INITIAL_STATE, action) => {
       return action.payload;
     case DELETE_MENU:
       return state.filter(menu => menu.menuId !== action.payload);
-      case EDIT_MENU:
-        return {...state, menus: [action.payload]}
-      case FETCH_MENU:
-        return action.payload
+    case EDIT_MENU:
+      return { ...state, menus: [action.payload] };
+    case FETCH_MENU:
+      return action.payload;
     default:
       return state;
   }
